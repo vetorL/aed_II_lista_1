@@ -6,6 +6,8 @@
 // e outro em matriz.
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 typedef struct s {
 
@@ -20,9 +22,34 @@ typedef struct {
 
 } vertice;
 
+vertice * criaListaAdj(int v);
+
 int main() {
 
-    
+    // Cria g1
+
+    int v1 = 5; // numero de vertices de v1
+    vertice * g1 = criaListaAdj(v1);
+
+    // Cria g2
+    int v2 = 3; // numero de vertices de v2
+    vertice * g2 = criaListaAdj(v2);
+
+}
+
+vertice * criaListaAdj(int v) {
+
+    vertice * g = (vertice *) malloc(sizeof(vertice) * (v+1));
+
+    // zera todos os campos
+
+    for(int i = 0; i <= v; i++) {
+
+        g[i].inicio = NULL;
+
+    }
+
+    return g;
 
 }
 
