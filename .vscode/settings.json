@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "grafo_lista.h": "c",
+        "grafo_matriz.h": "c",
+        "stdlib.h": "c"
+    }
+}
