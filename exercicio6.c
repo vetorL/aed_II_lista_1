@@ -11,6 +11,7 @@ typedef struct s {
 
 typedef struct {
 
+    int flag;
     no * inicio;
 
 } vertice;
