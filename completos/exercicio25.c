@@ -14,7 +14,7 @@ typedef struct s {
 typedef struct {
 
     int flag;
-    int grau;
+    int dist;
     no * inicio;
 
 } vertice;
@@ -33,7 +33,7 @@ vertice * criaLista(int v) {
     for(int i = 1; i <= v; i++) {
 
         g[i].flag = 0;
-        g[i].grau = -1;
+        g[i].dist = -1;
         g[i].inicio = NULL;
 
     }
@@ -56,7 +56,7 @@ void inserirAresta(vertice * g, int i, int j) {
 void inserirArestaND(vertice * g, int i, int j) {
 
     inserirAresta(g, i, j);
-    inserirAresta(g, j, i);
+    // inserirAresta(g, j, i);
 
 }
 
@@ -116,13 +116,17 @@ void largura(vertice * g, int i, int graus) {
         g[i].flag = 2;
         no * p = g[i].inicio;
 
-        if(g[p->adj].flag == 0) {
-            entrarFila(&f, p->adj);
-            g[p->adj].flag = 1;
-            g[p->adj].grau = g[i].grau + 1;
-        }
+        while(p) {
 
-        p = p->prox;
+            if(g[p->adj].flag == 0) {
+                entrarFila(&f, p->adj);
+                g[p->adj].flag = 1;
+                g[p->adj].dist = g[i].dist + 1;
+            }
+
+            p = p->prox;
+
+        }
 
     }
 
@@ -130,19 +134,36 @@ void largura(vertice * g, int i, int graus) {
 
 void exibirUsuariosRelacionados(vertice * g, int i, int graus, int v) {
 
+    largura(g, i, graus);
+
     for(int i = 1; i <= v; i++) {
 
         no * p = g[i].inicio;
 
         while(p) {
 
-            if(g[p->adj].grau <= graus) {
+            if(g[p->adj].dist <= graus && g[p->adj].flag < 3) {
                 printf(" %d", p->adj);
+                g[p->adj].flag = 3;
             }
 
             p = p->prox;
 
         }
+
+    }
+
+}
+
+void exibir(vertice * g, int v) {
+
+    for(int i = 1; i <= v; i++) {
+
+        printf("%d flag:(%d) dist:(%d) ==>", i, g[i].flag, g[i].dist);
+
+        // bla bla bla
+
+        printf("\n");
 
     }
 
@@ -161,11 +182,13 @@ int main() {
 
     int i = 1;
     int graus = 1;
-    g[i].grau = 0;
+    g[i].dist = 0;
 
     printf("Usuarios relacionados a %d com ate %d graus:", i, graus);
 
     exibirUsuariosRelacionados(g, i, graus, V);
 
     puts("");
+
+    exibir(g, V);
 }
